@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog title="Boek toevoegen" showHeader="true">
+		<content>
+			<VBox class="sapUiSmallMargin">
+				<Label text="Titel:"></Label>
+				<Input value="{/BookToAdd/Naam}"></Input>
+				<Label text="Auteur:"></Label>
+				<Input value="{/BookToAdd/Auteur}"></Input>
+				<Label text="Datum uitgifte:"></Label>
+				<DatePicker dateValue="{/BookToAdd/DatumUitgifte}"></DatePicker>
+				<Label text="Verkocht aantal:"></Label>
+				<Input type="Number" value="{/BookToAdd/AantalVerkocht}"></Input>
+			</VBox>
+		</content>
+		<buttons>
+			<Button text="Toevoegen" press="onAddBookToModel"></Button>
+			<Button text="Sluiten" press="onCloseDialog"></Button>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

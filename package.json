@@ -1,0 +1,19 @@
+{
+  "name": "ui5-mobx-state-tree-examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webapp/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leonalliander/ui5-mobx-state-tree-examples.git"
+  },
+  "author": "Leon van Ginneken, Caspár van Tergouw",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leonalliander/ui5-mobx-state-tree-examples/issues"
+  },
+  "homepage": "https://github.com/leonalliander/ui5-mobx-state-tree-examples#readme"
+}
