@@ -43,6 +43,10 @@ sap.ui.define([
 		onRecover: function() {
 			boekStore.recoverState();
 			MessageToast.show("State is hersteld");
+		},
+
+		onHistoryChange: function(oEvent) {
+			boekStore.goToStepInHistory(oEvent.getParameter("value"));
 		}
 	});
 });

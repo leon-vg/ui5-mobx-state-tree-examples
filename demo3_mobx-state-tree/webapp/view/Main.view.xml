@@ -7,7 +7,9 @@
 					<Table footerText="Totaal verkocht: {/TotaalAantalVerkochteBoeken}" items="{/Boeken}">
 						<headerToolbar>
 							<Toolbar>
-								<Title text="Boeken" />
+								<Title text="Boeken" width="4em" />
+								<ToolbarSpacer />
+								<Slider enableTickmarks="true" min="0" max="{historyStore>/length}" liveChange="onHistoryChange" />
 								<ToolbarSpacer />
 								<Button icon="sap-icon://save" press="onSave" />
 								<Button icon="sap-icon://undo" press="onRecover" />

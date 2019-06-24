@@ -3,16 +3,17 @@ sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"MobXExampleProject/mobx/MobxModel",
 	"sap/m/MessageToast",
-	"MobXExampleProject/model/boekStore"
-], function(UIComponent, MobxModel, MessageToast, boekStore) {
+	"MobXExampleProject/model/boekStore",
+	"MobXExampleProject/store/historyStore"
+], function(UIComponent, MobxModel, MessageToast, boekStore, historyStore) {
 	"use strict";
 	return UIComponent.extend("MobXExampleProject.Component", {
 		metadata: {
 			manifest: "json"
 		},
 		init: function() {
-			var oModel = new MobxModel(boekStore);
-			this.setModel(oModel);
+			this.setModel(new MobxModel(boekStore));
+			this.setModel(new MobxModel(historyStore), "historyStore");
 			this.setMobxFunctions();
 
 			// call the base component's init function
