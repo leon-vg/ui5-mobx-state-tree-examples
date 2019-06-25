@@ -1,9 +1,8 @@
 // global mobxStateTree
 sap.ui.define([
   "./Boek", 
-  "../store/historyStore",
   "MobXExampleProject/mockData/mockData"
-], function(Boek, historyStore, mockData) {
+], function(Boek, mockData) {
     "use strict";
     
     const types = mobxStateTree.types;
@@ -12,17 +11,20 @@ sap.ui.define([
     const BoekStore = types.model("BoekStore", {
         Boeken: types.array(Boek),
         history: types.array(types.frozen()),
-        currentStep: 0
+        currentStep: -1
     })
     .views(self => ({
       get historyLength() {
-        return self.history.length;
+        return self.history.length - 1;
       },
       get BoekenView() {
-        if (self.currentStep === self.history.length) {
+        if (self.currentStep === self.history.length - 1) {
           return self.Boeken;
         } else {
-          return self.history[self.currentStep]
+          let historyState = self.history[self.currentStep];
+          // Bugfix - date-field is a timestamp in a snapshot, so we need to make it a Date again to prevent errors
+          historyState.forEach((book) => book.DatumUitgifte = new Date(book.DatumUitgifte));
+          return self.history[self.currentStep];
         }
       },
       get BestSellers(){
@@ -64,6 +66,7 @@ sap.ui.define([
     const boekStore = BoekStore.create(mockData);
 
     mobxStateTree.onSnapshot(boekStore.Boeken, snapshot => boekStore.addHistoryState(snapshot));
+    boekStore.addHistoryState(mobxStateTree.getSnapshot(boekStore.Boeken));
 
     // mobxStateTree.onSnapshot(boekStore, console.dir);
 
