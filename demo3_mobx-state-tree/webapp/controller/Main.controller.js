@@ -8,7 +8,7 @@ sap.ui.define([
 	return Controller.extend("MobXExampleProject.controller.Main", {
 		onAddSoldBook: function(oEvt){
 			var oBook = oEvt.getSource().getBindingContext().getObject();
-			// oBook.AantalVerkocht++;
+			// oBook.amountSold++;
 			oBook.addSoldBook();
 		},
 		
