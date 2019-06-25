@@ -11,50 +11,50 @@ sap.ui.define([
 		
 		onAddSoldBook: function(oEvt){
 			var oItem = oEvt.getSource().getBindingContext().getObject();
-			oItem.AantalVerkocht++;
+			oItem.amountSold++;
 			this.getView().getModel().refresh();
 			this.calculateTotals();
-			this.showBoekWijziging();
+			this.showBookChange();
 		},
 		
 		onRemoveSoldBook: function(oEvt){
 			var oItem = oEvt.getSource().getBindingContext().getObject();
-			oItem.AantalVerkocht--;
+			oItem.amountSold--;
 			this.getView().getModel().refresh();
 			this.calculateTotals();
-			this.showBoekWijziging();
+			this.showBookChange();
 		},
 
-		showBoekWijziging: function(){
-			MessageToast.show("Er is een boek toegevoegd of verwijderd");
+		showBookChange: function(){
+			MessageToast.show("A book has been added or deleted");
 		},
 
-		showBoekenVerkochtRecord: function(){
-			MessageToast.show("Er zijn meer dan 500 boeken verkocht!!!");
+		showBooksSoldRecord: function(){
+			MessageToast.show("Over 500 books are sold!!!");
 		},
 		
 		calculateTotals: function(){
 			var oModel = this.getView().getModel();
-			var aBoeken = oModel.getData().Boeken;
+			var aBooks = oModel.getData().books;
 
 			//Bereken totaal aantal verkochte boeken
-			var iTotaalVerkocht = 0;
-			aBoeken.map((oBook) => { iTotaalVerkocht = iTotaalVerkocht + oBook.AantalVerkocht;});
+			var iAmountSold = 0;
+			aBooks.forEach((oBook) => { iAmountSold = iAmountSold + oBook.amountSold;});
 
 			//Bepaal de bestseller array
-			var aBestSellerArray = aBoeken.filter((oBook) => { return oBook.AantalVerkocht >= 15;});;
+			var aBestSellerArray = aBooks.filter((oBook) => { return oBook.amountSold >= 15;});;
 			
 			//Set beide properties weer in het model
-			oModel.setProperty("/TotaalAantalVerkochteBoeken", iTotaalVerkocht);
-			oModel.setProperty("/BestSellers", aBestSellerArray);
+			oModel.setProperty("/totalNumberSoldBooks", iAmountSold);
+			oModel.setProperty("/bestsellers", aBestSellerArray);
 			
 			//Als er meer dan 500 boeken verkocht zijn, toon dit dan!
-			if(parseInt(iTotaalVerkocht) > 500){
-				this.showBoekenVerkochtRecord();
+			if(parseInt(iAmountSold) > 500){
+				this.showBooksSoldRecord();
 			}
 
 			if(aBestSellerArray.length > 0){
-				MessageToast.show("Er zijn " + aBestSellerArray.length + " BestSeller(s) op de lijst.");
+				MessageToast.show("There are " + aBestSellerArray.length + " bestseller(s) in this list.");
 			}
 		},
 
@@ -68,10 +68,10 @@ sap.ui.define([
 		
 		onAddBookToModel: function(oEvt){
 			var oModel = this.getView().getModel();
-			var oBookToAdd = oModel.getData().BookToAdd;
-			var aBooks = oModel.getData().Boeken
+			var oBookToAdd = oModel.getData().bookToAdd;
+			var aBooks = oModel.getData().books
 			aBooks.push(oBookToAdd);
-			oModel.setProperty("/Boeken", aBooks);
+			oModel.setProperty("/books", aBooks);
 			this.calculateTotals();
 			oEvt.getSource().getParent().close();
 		},
