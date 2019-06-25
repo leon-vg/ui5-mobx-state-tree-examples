@@ -10,6 +10,11 @@ sap.ui.define([], function() {
         dateReleased: types.Date,
         amountSold: types.integer
     })
+    .views(self => ({
+        get bestseller () {
+            return self.amountSold >= 15;
+        } 
+    }))
     .actions(self => ({
         addSoldBook() {
             self.amountSold++;

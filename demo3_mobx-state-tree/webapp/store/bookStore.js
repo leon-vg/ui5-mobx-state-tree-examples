@@ -13,7 +13,7 @@ sap.ui.define([
     })
     .views(self => ({
       get bestsellers(){
-        return self.books.filter((oBook) => { return oBook.amountSold >= 15;});
+        return self.books.filter((oBook) => oBook.bestseller);
       },
       get totalNumberSoldBooks() {
         var iTotal = 0;
