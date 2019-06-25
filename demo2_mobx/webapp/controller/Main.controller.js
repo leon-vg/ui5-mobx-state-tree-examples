@@ -5,12 +5,12 @@ sap.ui.define([
 	return Controller.extend("MobXExampleProject.controller.Main", {
 		onAddSoldBook: function(oEvt){
 			var oItem = oEvt.getSource().getBindingContext().getObject();
-			oItem.AantalVerkocht++;
+			oItem.amountSold++;
 		},
 		
 		onRemoveSoldBook: function(oEvt){
 			var oItem = oEvt.getSource().getBindingContext().getObject();
-			oItem.AantalVerkocht--;
+			oItem.amountSold--;
 		},
 		
 		onAddBookPress: function(oEvt){
@@ -23,7 +23,7 @@ sap.ui.define([
 		
 		onAddBookToModel: function(oEvt){
 			var oModelData = this.getView().getModel().getData();
-			oModelData.Boeken.push(oModelData.BookToAdd);
+			oModelData.books.push(oModelData.bookToAdd);
 			oEvt.getSource().getParent().close();
 		},
 		

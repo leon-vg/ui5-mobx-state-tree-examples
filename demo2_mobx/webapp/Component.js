@@ -23,25 +23,25 @@ sap.ui.define([
 			var oObservable = this.getModel().getData();
 			//Triggered once immediatly, then afterwards everytime one of its dependencies change
 			mobx.autorun(() => {
-				if(oObservable.Boeken.length){
-					MessageToast.show("Er is een boek toegevoegd of verwijderd");
+				if(oObservable.books.length){
+					MessageToast.show("A book has been added or deleted");
 				}
 			});
 
 			//Triggers when the function returns true, then removes itself
 			mobx.when(
-				() => oObservable.TotaalAantalVerkochteBoeken > 500,
+				() => oObservable.totalNumberSoldBooks > 500,
 				() => {
-					MessageToast.show("Er zijn " + oObservable.TotaalAantalVerkochteBoeken + " boeken verkocht!!!");
+					MessageToast.show("A total of " + oObservable.totalNumberSoldBooks + " books have been sold!!!");
 				}
 			);
 		
 			//Triggered only when the observed property changes
 			mobx.reaction(
-				() => oObservable.BestSellers.length,
+				() => oObservable.bestsellers.length,
 				() => {
-					if(oObservable.BestSellers.length > 0){
-						MessageToast.show("Er zijn " + oObservable.BestSellers.length + " BestSeller(s) op de lijst.");
+					if(oObservable.bestsellers.length > 0){
+						MessageToast.show("There are " + oObservable.bestsellers.length + " bestseller(s) in this list.");
 					}
 				}
 			);
