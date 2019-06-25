@@ -1,9 +1,8 @@
 // global mobxStateTree
 sap.ui.define([
   "./Boek", 
-  "../store/historyStore",
   "MobXExampleProject/mockData/mockData"
-], function(Boek, historyStore, mockData) {
+], function(Boek, mockData) {
     "use strict";
     
     const types = mobxStateTree.types;
@@ -37,16 +36,11 @@ sap.ui.define([
       },
       recoverState() {
         mobxStateTree.applySnapshot(self, JSON.parse(localStorage.getItem("boeken")));
-      },
-      goToStepInHistory(index) {
-        mobxStateTree.applySnapshot(self, historyStore.states[index]);
       }
     }))
 
     // Creëer de BoekStore
     const boekStore = BoekStore.create(mockData);
-
-    mobxStateTree.onSnapshot(boekStore, snapshot => historyStore.addHistoryState(snapshot));
 
     // mobxStateTree.onSnapshot(boekStore, console.dir);
 

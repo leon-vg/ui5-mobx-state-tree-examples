@@ -3,9 +3,8 @@ sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"MobXExampleProject/mobx/MobxModel",
 	"sap/m/MessageToast",
-	"MobXExampleProject/model/boekStore",
-	"MobXExampleProject/store/historyStore"
-], function(UIComponent, MobxModel, MessageToast, boekStore, historyStore) {
+	"MobXExampleProject/model/boekStore"
+], function(UIComponent, MobxModel, MessageToast, boekStore) {
 	"use strict";
 	return UIComponent.extend("MobXExampleProject.Component", {
 		metadata: {
@@ -13,7 +12,6 @@ sap.ui.define([
 		},
 		init: function() {
 			this.setModel(new MobxModel(boekStore));
-			this.setModel(new MobxModel(historyStore), "historyStore");
 			this.setMobxFunctions();
 
 			// call the base component's init function

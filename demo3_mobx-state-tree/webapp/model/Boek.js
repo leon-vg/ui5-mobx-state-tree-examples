@@ -19,6 +19,6 @@ sap.ui.define([], function() {
                 self.AantalVerkocht--;
             }
         }
-    }))
+    }));
 
 });
