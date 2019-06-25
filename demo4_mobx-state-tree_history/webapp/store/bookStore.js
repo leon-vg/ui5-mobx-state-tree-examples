@@ -1,8 +1,8 @@
 // global mobxStateTree
 sap.ui.define([
-  "./Boek", 
+  "../model/Book", 
   "MobXExampleProject/mockData/mockData"
-], function(Boek, mockData) {
+], function(Book, mockData) {
     "use strict";
     const dateParser = function (key, value) {
       var reISO = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*))(?:Z|(\+|-)([\d|:]*))?$/;
@@ -21,9 +21,9 @@ sap.ui.define([
     };
     const types = mobxStateTree.types;
 
-    // Definitie van een BoekStore
-    const BoekStore = types.model("BoekStore", {
-        Boeken: types.array(Boek),
+    // Definition of a BookStore
+    const BookStore = types.model("BookStore", {
+        books: types.array(Book),
         history: types.array(types.frozen()),
         currentStep: -1
     })
@@ -31,44 +31,43 @@ sap.ui.define([
       get historyLength() {
         return self.history.length - 1;
       },
-      get BoekenView() {
+      get bookView() {
         if (self.currentStep === self.history.length - 1) {
-          return self.Boeken;
+          return self.books;
         } else {
           let historyState = self.history[self.currentStep];
           // Bugfix - date-field is a timestamp in a snapshot, so we need to make it a Date again to prevent errors
-          historyState.forEach((book) => book.DatumUitgifte = new Date(book.DatumUitgifte));
+          historyState.forEach((book) => book.dateReleased = new Date(book.dateReleased));
           return self.history[self.currentStep];
         }
       },
-      get BestSellers(){
-        return self.BoekenView.filter((oBook) => { return oBook.AantalVerkocht >= 15;});
+      get bestsellers(){
+        return self.bookView.filter((oBook) => { return oBook.amountSold >= 15;});
       },
-      get TotaalAantalVerkochteBoeken() {
+      get totalNumberSoldBooks() {
         var iTotal = 0;
-        self.BoekenView.forEach((oBook) => { iTotal = iTotal + oBook.AantalVerkocht;});
+        self.books.forEach((oBook) => { iTotal = iTotal + oBook.amountSold;});
         return iTotal;
       }
     }))
     .actions(self => ({
       addBook(data) {
         try {
-          console.log("addBook");
-          data.AantalVerkocht = parseInt(data.AantalVerkocht);
-          mobxStateTree.typecheck(Boek, data);
-          self.Boeken.push(data);
+          data.amountSold = parseInt(data.amountSold);
+          mobxStateTree.typecheck(Book, data);
+          self.books.push(data);
         } catch(err) {
           console.log(err);
         }
       },
       saveState() {
         console.log("saveState");
-        localStorage.setItem("boeken", JSON.stringify(mobxStateTree.getSnapshot(self)));
+        localStorage.setItem("books", JSON.stringify(mobxStateTree.getSnapshot(self)));
       },
       recoverState() {
         console.log("recoverState");
-        mobxStateTree.typecheck(BoekStore, JSON.parse(localStorage.getItem("boeken"), dateParser));
-        mobxStateTree.applySnapshot(self, JSON.parse(localStorage.getItem("boeken"), dateParser));
+        mobxStateTree.typecheck(BookStore, JSON.parse(localStorage.getItem("books"), dateParser));
+        mobxStateTree.applySnapshot(self, JSON.parse(localStorage.getItem("books"), dateParser));
       },
       addHistoryState(state) {
         console.log("addHistoryState");
@@ -81,18 +80,18 @@ sap.ui.define([
     }));
 
     // Creëer de BoekStore
-    const boekStore = BoekStore.create(mockData);
+    const bookStore = BookStore.create(mockData);
 
-    mobxStateTree.onSnapshot(boekStore.Boeken, snapshot => {
+    mobxStateTree.onSnapshot(bookStore.books, snapshot => {
       console.log("onSnapshot");
-      boekStore.addHistoryState(snapshot)
+      bookStore.addHistoryState(snapshot)
     });
-    boekStore.addHistoryState(mobxStateTree.getSnapshot(boekStore.Boeken));
+    bookStore.addHistoryState(mobxStateTree.getSnapshot(bookStore.books));
 
     // mobxStateTree.onSnapshot(boekStore, console.dir);
 
     // mobxStateTree.onPatch(boekStore, console.dir);
 
-    return boekStore;
+    return bookStore;
 
 });

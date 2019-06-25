@@ -1,9 +1,9 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
-	"MobXExampleProject/model/boekStore",
+	"MobXExampleProject/store/bookStore",
 	"sap/m/MessageToast"
-], function(Controller, JSONModel, boekStore, MessageToast) {
+], function(Controller, JSONModel, bookStore, MessageToast) {
 	"use strict";
 	return Controller.extend("MobXExampleProject.controller.Main", {
 		onAddSoldBook: function(oEvt){
@@ -21,13 +21,13 @@ sap.ui.define([
 			if (!this.oAddBookDialog) {
                 this.oAddBookDialog = sap.ui.xmlfragment("MobXExampleProject.fragments.AddBookDialog", this);
             }
-			this.oAddBookDialog.setModel(new JSONModel({DatumUitgifte: new Date()}));
+			this.oAddBookDialog.setModel(new JSONModel({dateReleased: new Date()}));
             this.oAddBookDialog.open();
 		},
 		
 		onAddBookToModel: function(oEvt){
 			var oModelData = this.oAddBookDialog.getModel().getData();
-			boekStore.addBook(oModelData);
+			bookStore.addBook(oModelData);
 			oEvt.getSource().getParent().close();
 		},
 		
@@ -36,17 +36,17 @@ sap.ui.define([
 		},
 
 		onSave: function() {
-			boekStore.saveState();
-			MessageToast.show("State is opgeslagen");
+			bookStore.saveState();
+			MessageToast.show("State is saved");
 		},
 
 		onRecover: function() {
-			boekStore.recoverState();
-			MessageToast.show("State is hersteld");
+			bookStore.recoverState();
+			MessageToast.show("State is recovered");
 		},
-
+		
 		onHistoryChange: function(oEvent) {
-			boekStore.setCurrentStep(oEvent.getParameter("value"));
+			bookStore.setCurrentStep(oEvent.getParameter("value"));
 		}
 	});
 });

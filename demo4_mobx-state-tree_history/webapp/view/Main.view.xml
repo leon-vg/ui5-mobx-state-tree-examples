@@ -4,10 +4,10 @@
 		<pages>
 			<Page title="{i18n>title}">
 				<content>
-					<Table footerText="Totaal verkocht: {/TotaalAantalVerkochteBoeken}" items="{/BoekenView}">
+					<Table footerText="Total amount sold: {/totalNumberSoldBooks}" headerText="Books" items="{/bookView}">
 						<headerToolbar>
 							<Toolbar>
-								<Title text="Boeken" width="4em" />
+								<Title text="Books" width="4em" />
 								<ToolbarSpacer />
 								<Slider enableTickmarks="true" value="{path: '/currentStep', mode: 'OneWay'}" min="0" max="{/historyLength}" liveChange="onHistoryChange" />
 								<ToolbarSpacer />
@@ -17,16 +17,16 @@
 						</headerToolbar>
 						<columns>
 							<Column width="25%">
-								<Text text="Boek"/>
+								<Text text="Book"/>
 							</Column>
 							<Column width="25%">
-								<Text text="Auteur"/>
+								<Text text="Author"/>
 							</Column>
 							<Column width="25%">
-								<Text text="Datum uitgifte"/>
+								<Text text="Date released"/>
 							</Column>
 							<Column width="25%">
-								<Text text="Verkocht"/>
+								<Text text="Sold"/>
 							</Column>
 							<Column width="10em">
 								<Text text=""/>
@@ -35,10 +35,10 @@
 						<items>
 							<ColumnListItem>
 								<cells>
-									<Text text="{Naam}"/>
-									<Text text="{Auteur}"/>
-									<Text text="{ path: 'DatumUitgifte', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd-MM-yyyy' }}"/>
-									<Text text="{AantalVerkocht}"/>
+									<Text text="{name}"/>
+									<Text text="{author}"/>
+									<Text text="{ path: 'dateReleased', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd-MM-yyyy' }}"/>
+									<Text text="{amountSold}"/>
 									<HBox>
 										<Button text="+" press="onAddSoldBook"/>
 										<Button text="-" press="onRemoveSoldBook"/>
@@ -47,24 +47,24 @@
 							</ColumnListItem>
 						</items>
 					</Table>
-					<Table class="sapUiMediumMarginTop" headerText="Bestsellers" items="{/BestSellers}">
+					<Table class="sapUiMediumMarginTop" headerText="Bestsellers" items="{/bestsellers}">
 						<columns>
 							<Column width="25%">
-								<Text text="Boek"/>
+								<Text text="Book"/>
 							</Column>
 							<Column width="25%">
-								<Text text="Auteur"/>
+								<Text text="Author"/>
 							</Column>
 							<Column width="25%">
-								<Text text="Verkocht"/>
+								<Text text="AmountSold"/>
 							</Column>
 						</columns>
 						<items>
 							<ColumnListItem>
 								<cells>
-									<Text text="{Naam}"/>
-									<Text text="{Auteur}"/>
-									<Text text="{AantalVerkocht}"/>
+									<Text text="{name}"/>
+									<Text text="{author}"/>
+									<Text text="{amountSold}"/>
 								</cells>
 							</ColumnListItem>
 						</items>
@@ -73,7 +73,7 @@
 				<footer>
 					<Bar>
 						<contentRight>
-							<Button text="Boek toevoegen" press="onAddBookPress"></Button>	
+							<Button text="Add book" press="onAddBookPress"></Button>	
 						</contentRight>
 					</Bar>
 				</footer>
