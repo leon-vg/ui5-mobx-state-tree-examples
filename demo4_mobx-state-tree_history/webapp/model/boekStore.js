@@ -4,7 +4,21 @@ sap.ui.define([
   "MobXExampleProject/mockData/mockData"
 ], function(Boek, mockData) {
     "use strict";
-    
+    const dateParser = function (key, value) {
+      var reISO = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*))(?:Z|(\+|-)([\d|:]*))?$/;
+      var reMsAjax = /^\/Date\((d|-|.*)\)[\/|\\]$/;
+      if (typeof value === 'string') {
+          var a = reISO.exec(value);
+          if (a)
+              return new Date(value);
+          a = reMsAjax.exec(value);
+          if (a) {
+              var b = a[1].split(/[-+,.]/);
+              return new Date(b[0] ? +b[0] : 0 - +b[1]);
+          }
+      }
+      return value;
+    };
     const types = mobxStateTree.types;
 
     // Definitie van een BoekStore
@@ -39,6 +53,7 @@ sap.ui.define([
     .actions(self => ({
       addBook(data) {
         try {
+          console.log("addBook");
           data.AantalVerkocht = parseInt(data.AantalVerkocht);
           mobxStateTree.typecheck(Boek, data);
           self.Boeken.push(data);
@@ -47,13 +62,16 @@ sap.ui.define([
         }
       },
       saveState() {
+        console.log("saveState");
         localStorage.setItem("boeken", JSON.stringify(mobxStateTree.getSnapshot(self)));
       },
       recoverState() {
-        mobxStateTree.applySnapshot(self, JSON.parse(localStorage.getItem("boeken")));
+        console.log("recoverState");
+        mobxStateTree.typecheck(BoekStore, JSON.parse(localStorage.getItem("boeken"), dateParser));
+        mobxStateTree.applySnapshot(self, JSON.parse(localStorage.getItem("boeken"), dateParser));
       },
       addHistoryState(state) {
-        console.log(state)
+        console.log("addHistoryState");
         self.history.push(state);
         self.currentStep++;
       },
@@ -65,7 +83,10 @@ sap.ui.define([
     // Creëer de BoekStore
     const boekStore = BoekStore.create(mockData);
 
-    mobxStateTree.onSnapshot(boekStore.Boeken, snapshot => boekStore.addHistoryState(snapshot));
+    mobxStateTree.onSnapshot(boekStore.Boeken, snapshot => {
+      console.log("onSnapshot");
+      boekStore.addHistoryState(snapshot)
+    });
     boekStore.addHistoryState(mobxStateTree.getSnapshot(boekStore.Boeken));
 
     // mobxStateTree.onSnapshot(boekStore, console.dir);
