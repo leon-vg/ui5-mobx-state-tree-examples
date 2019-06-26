@@ -33,16 +33,6 @@ sap.ui.define([
 		
 		onCloseDialog: function(oEvt){
 			oEvt.getSource().getParent().close();
-		},
-
-		onSave: function() {
-			bookStore.saveState();
-			MessageToast.show("State is saved");
-		},
-
-		onRecover: function() {
-			bookStore.recoverState();
-			MessageToast.show("State is recovered");
 		}
 	});
 });

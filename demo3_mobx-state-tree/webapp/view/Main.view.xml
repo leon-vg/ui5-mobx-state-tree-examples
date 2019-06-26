@@ -5,16 +5,6 @@
 			<Page title="{i18n>title}">
 				<content>
 					<Table footerText="Total amount sold: {/totalNumberSoldBooks}" headerText="Books" items="{/books}">
-						<headerToolbar>
-							<Toolbar>
-								<Title text="Books" width="4em" />
-								<ToolbarSpacer />
-								<!-- <Slider enableTickmarks="true" value="{path: '/currentStep', mode: 'OneWay'}" min="0" max="{/historyLength}" liveChange="onHistoryChange" />
-								<ToolbarSpacer /> -->
-								<Button icon="sap-icon://save" press="onSave" />
-								<Button icon="sap-icon://undo" press="onRecover" />
-							</Toolbar>
-						</headerToolbar>
 						<columns>
 							<Column width="25%">
 								<Text text="Book"/>

@@ -30,12 +30,6 @@ sap.ui.define([
         } catch(err) {
           console.log(err);
         }
-      },
-      saveState() {
-        localStorage.setItem("books", JSON.stringify(mobxStateTree.getSnapshot(self)));
-      },
-      recoverState() {
-        mobxStateTree.applySnapshot(self, JSON.parse(localStorage.getItem("books")));
       }
     }))
 
