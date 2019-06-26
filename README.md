@@ -8,4 +8,4 @@ These are demos of applying MobX and MobX state tree in a UI5 app - originally a
 
 [Demo 3](https://leonalliander.github.io/ui5-mobx-state-tree-examples/demo3_mobx-state-tree/webapp/) is once again the same application, but now using MobX state tree.
 
-[Demo 4](https://leonalliander.github.io/ui5-mobx-state-tree-examples/demo3_mobx-state-tree_history/webapp/) adds a history slider to the application.
+[Demo 4](https://leonalliander.github.io/ui5-mobx-state-tree-examples/demo4_mobx-state-tree_history/webapp/) adds a history slider to the application.
